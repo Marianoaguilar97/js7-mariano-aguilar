@@ -1,7 +1,9 @@
 //selec de elem
+
 const productosEl = document.querySelector(".productos");
 const carritoEl = document.querySelector(".productosCarrito");
 const carritoTotal = document.querySelector(".total");
+
 //rederizado productos
 function renderProductos () {
     viajes.forEach( (viaje) => {
@@ -28,6 +30,14 @@ function AgregarCarrito (id) {
     //validacion si ya existe item en carrito
     if(carrito.some( (item) => item.id === id)) {
         cambiarCantidadUnidades("plus", id);
+        Toastify({
+  
+          text: "Se agrego al carrito con éxito",
+          
+          duration: 3000
+          
+          }).showToast();
+
     }
     else {
         const item = viajes.find( (viaje) => viaje.id === id );
@@ -102,6 +112,13 @@ function renderItemsCarrito(){
 function removerItemsCarrito(id) {
     carrito = carrito.filter( (item) => item.id !== id);
     actualizarCarrito();
+    Toastify({
+  
+      text: "Se removio el producto de el carrito con éxito",
+      
+      duration: 3000
+      
+      }).showToast();
 }
 
 // funcion cambiar numero de unidades
@@ -111,8 +128,22 @@ function cambiarCantidadUnidades(accion, id){
         if (item.id === id){
             if (accion === "minus" && numeroDeUnidades > 1) {
                 numeroDeUnidades--;
+                Toastify({
+  
+                  text: "Se elimino una unidad de el carrito con éxito",
+                  
+                  duration: 3000
+                  
+                  }).showToast();
             } else if (accion === "plus" && numeroDeUnidades < item.lugares) {
                 numeroDeUnidades++;
+                Toastify({
+  
+                  text: "Se agrego una unidad de el carrito con éxito",
+                  
+                  duration: 3000
+                  
+                  }).showToast();
              }
         }
         return {
@@ -122,3 +153,29 @@ function cambiarCantidadUnidades(accion, id){
     })
     actualizarCarrito()
 }
+
+
+document.addEventListener("DOMContentLoaded", function(){
+  Swal.fire({
+    title: 'Bienvenido a Buenos Viajes!',
+    showClass: {
+      popup: 'animate__animated animate__fadeInDown'
+    },
+    hideClass: {
+      popup: 'animate__animated animate__fadeOutUp'
+    }
+  })
+});
+
+const alertaCompra = () => {
+  Toastify({
+  
+    text: "Su compra fue realizada con éxito, en la brevedad sera contactado",
+    
+    duration: 3000
+    
+    }).showToast();
+}
+
+const botonCompra = document.querySelector(".boton--compra")
+botonCompra.addEventListener("click", alertaCompra)
